@@ -76,6 +76,9 @@ MACHINES = {
 Vagrant.configure("2") do |config|
   config.vm.box_check_update = false
   config.vm.provider :virtualbox
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+  end
   MACHINES.each do |boxname, boxconfig|
     config.vm.define boxname do |box|
       box.vm.box = boxconfig[:box_name]
@@ -86,7 +89,7 @@ Vagrant.configure("2") do |config|
       box.vm.provision "ansible" do |ansible|
         ansible.compatibility_mode = "2.0"
         ansible.playbook = "ansible/playbook.yml"
-        ansible.extra_vars = GLOBAL_VARS.merge(boxconfig[:vars]).merge({host_name: boxname.to_s, box_name: boxconfig[:box_name]})
+        ansible.extra_vars = GLOBAL_VARS.merge(boxconfig[:vars]).merge({host_name: boxname.to_s})
         ansible.host_key_checking = "false"
         ansible.become = "true"
         ansible.limit = "all"

@@ -2,9 +2,13 @@
   timezone:
     name: Europe/Moscow
 
-- name: Install base tools
+- name: install base tools almalinux
   block:
-    - name: Install base tools on almalinux/9
+    - name: update cache
+      ansible.builtin.dnf:
+        update_cache: yes
+
+    - name: Install base tools
       ansible.builtin.dnf:
         name:
         - glibc-langpack-ru
@@ -18,12 +22,18 @@
         # disable_gpg_check: true
         # update_cache: yes
         # install_weak_deps: false
-      when: (ansible_os_family == "RedHat")
+  when: (ansible_os_family == "RedHat")
+
+- name: install base tools ubuntu
+  block:
+    - name: update cache
+      ansible.builtin.apt:
+        update_cache: yes
 
     - name: Install base tools on ubuntu/jammy64
       ansible.builtin.apt:
         name:
-        - glibc-langpack-ru
+        - language-pack-ru-base
         - vim
         - traceroute
         - tcpdump
@@ -34,4 +44,4 @@
         # disable_gpg_check: true
         # update_cache: yes
         # install_weak_deps: false
-      when: (ansible_os_family == "Debian")
+  when: (ansible_os_family == "Debian")
