@@ -17,11 +17,6 @@
         - tcpdump
         - net-tools
         state: latest
-        # disablerepo: appstream,baseos,extras
-        # enablerepo: local
-        # disable_gpg_check: true
-        # update_cache: yes
-        # install_weak_deps: false
   when: (ansible_os_family == "RedHat")
 
 - name: install base tools ubuntu
@@ -39,9 +34,4 @@
         - tcpdump
         - net-tools
         state: latest
-        # disablerepo: appstream,baseos,extras
-        # enablerepo: local
-        # disable_gpg_check: true
-        # update_cache: yes
-        # install_weak_deps: false
   when: (ansible_os_family == "Debian")
