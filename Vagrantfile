@@ -9,7 +9,7 @@ MACHINES = {
       {adapter: 3, auto_config: false, virtualbox__intnet: "router-net"},
       {ip: '192.168.56.10', adapter: 8},
     ],
-    :vars => {}
+    :vars => {bond_ip: '192.168.255.1'}
   },
   :centralRouter => {
     :box_name => "almalinux/9",
@@ -19,7 +19,7 @@ MACHINES = {
       {ip: '192.168.255.9', adapter: 6, netmask: "255.255.255.252", virtualbox__intnet: "office1-central"},
       {ip: '192.168.56.11', adapter: 8},
     ],
-    :vars => {}
+    :vars => {bond_ip: '192.168.255.2'}
   },
 
   :office1Router => {
@@ -41,7 +41,7 @@ MACHINES = {
       {adapter: 2, auto_config: false, virtualbox__intnet: "testLAN"},
       {ip: '192.168.56.21', adapter: 8},
     ],
-    :vars => {}
+    :vars => {vlan_id: 1, vlan_ip: '10.10.10.254'}
   },
 
   :testServer1 => {
@@ -50,7 +50,7 @@ MACHINES = {
       {adapter: 2, auto_config: false, virtualbox__intnet: "testLAN"},
       {ip: '192.168.56.22', adapter: 8},
     ],
-    :vars => {}
+    :vars => {vlan_id: 1, vlan_ip: '10.10.10.1'}
   },
 
   :testClient2 => {
@@ -59,7 +59,7 @@ MACHINES = {
       {adapter: 2, auto_config: false, virtualbox__intnet: "testLAN"},
       {ip: '192.168.56.31', adapter: 8},
     ],
-    :vars => {}
+    :vars => {vlan_id: 2, vlan_ip: '10.10.10.254'}
   },
 
   :testServer2 => {
@@ -68,7 +68,7 @@ MACHINES = {
       {adapter: 2, auto_config: false, virtualbox__intnet: "testLAN"},
       {ip: '192.168.56.32', adapter: 8},
     ],
-    :vars => {}
+    :vars => {vlan_id: 2, vlan_ip: '10.10.10.1'}
   },
 
 }

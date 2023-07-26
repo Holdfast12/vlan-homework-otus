@@ -1,0 +1,32 @@
+- name: set up redhat vlan
+  block:
+  #Добавление темплейта в файл /etc/sysconfig/network-scripts/ifcfg-vlan1
+    - name: set up vlan
+      template:
+        src: redhat-vlan.j2
+        dest: /etc/sysconfig/network-scripts/ifcfg-vlan{{ vlan_id }}
+        owner: root
+        group: root
+        mode: 0644
+    
+    #Перезапуск службы NetworkManager
+    - name: restart network for vlan{{ vlan_id }}
+      service:
+        name: NetworkManager
+        state: restarted
+  when: (ansible_os_family == "RedHat" and vlan_id is defined and vlan_ip is defined)
+
+- name: set up debian vlan
+  block:
+    - name: set up vlan{{ vlan_id }}
+      template:
+        src: debian-vlan.j2
+        dest: /etc/netplan/50-cloud-init.yaml
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: apply set up vlan{{ vlan_id }}
+      shell: netplan apply
+
+  when: (ansible_os_family == "Debian" and vlan_id is defined and vlan_ip is defined)
