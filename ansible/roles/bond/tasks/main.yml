@@ -2,7 +2,7 @@
   block:
     - name: set up ifcfg-bond0
       template:
-        src: ifcfg-bond0.j2
+        src: redhat-bond.j2
         dest: /etc/sysconfig/network-scripts/ifcfg-bond0
         owner: root
         group: root
